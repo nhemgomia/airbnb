@@ -13,13 +13,16 @@ import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
 
 import useRegisterModal from "@/hooks/use-register-modal";
-import Modal from "./modal";
+import useLoginModal from "@/hooks/use-login-modal";
+
 import Heading from "@/components/heading";
+import Modal from "./modal";
 import Input from "../inputs/input";
 import Button from "../button";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -41,7 +44,9 @@ const RegisterModal = () => {
 
     axios.post('/api/register', data)
       .then(() => {
+        toast.success('Registered!');
         registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((error) => {
         toast.error("Something went wrong.");
@@ -50,6 +55,11 @@ const RegisterModal = () => {
         setIsLoading(false);
       });
   }
+
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -106,7 +116,7 @@ const RegisterModal = () => {
             Already have an account?
           </div>
           <div
-            onClick={registerModal.onClose}
+            onClick={toggle}
             className="
               text-neutral-800
               cursor-pointer
