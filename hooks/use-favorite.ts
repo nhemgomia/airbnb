@@ -45,7 +45,7 @@ const useFavorite = ({
       router.refresh();
       toast.success("Success");
     } catch (error: any) {
-      toast.error("Something wen wrong.");
+      toast.error("Something went wrong.");
     }
 
   },
