@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import Avatar from '../avatar';
 import MenuItem from './menu-item';
@@ -19,6 +20,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({
   currentUser
 }) => {
+  const router = useRouter();
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
@@ -95,40 +97,40 @@ const UserMenu: React.FC<UserMenuProps> = ({
             {currentUser ? (
               <>
                 <MenuItem 
+                  onClick={() => router.push("/trips")}
                   label="My trips" 
-                  onClick={() => {}}
                 />
                 <MenuItem 
+                  onClick={() => {}}
                   label="My favorites" 
-                  onClick={() => {}}
                 />
                 <MenuItem 
+                  onClick={() => {}}
                   label="My reservations" 
-                  onClick={() => {}}
                 />
                 <MenuItem 
+                  onClick={() => {}}
                   label="My properties" 
-                  onClick={() => {}}
                 />
                 <MenuItem 
-                  label="Airbnb your home" 
                   onClick={rentModal.onOpen}
+                  label="Airbnb your home" 
                 />
                 <hr />
                 <MenuItem 
-                  label="Logout" 
                   onClick={() => signOut()}
+                  label="Logout" 
                 />
               </>
             ) : (
               <>
                 <MenuItem 
-                  label="Login" 
                   onClick={loginModal.onOpen}
+                  label="Login" 
                 />
                 <MenuItem 
-                  label="Sign up" 
                   onClick={registerModal.onOpen}
+                  label="Sign up" 
                 />
               </>
             )}
